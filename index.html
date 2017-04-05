@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>IdleRPG Offline</title>
+
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <div id="header-skills">
+			<h2 style="text-align: center;">Skills</h2>
+
+            <div class="container flex center">
+                <div class="item">
+                    <div class="flex center v-center">
+                        <div class="container-icon">
+                            <img src="img/skills/combat.png" alt="Combat icon" class="icon skill" />
+                        </div>
+                        <div class="container-title">
+                            <div class="skill-title">Combat</div>
+                            <div>
+                                LVL: <div class="value"><span id="header-skill-combat-level">0</span></div>
+                            </div>
+                            <div>
+                                EXP: <div class="value"><span id="header-skill-combat-experience">0</span> / <span id="header-skill-combat-experience-required">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+					<progress id="header-skill-progress-combat-bar" class="progress-bar" value="0" max="100"></progress>
+                </div>
+                <div class="item">
+                    <div class="flex center v-center">
+                        <div class="container-icon">
+                            <img src="img/skills/mining.png" alt="Mining icon" class="icon skill" />
+                        </div>
+                        <div class="container-title">
+                            <div class="skill-title">Mining</div>
+                            <div>
+                                LVL: <div class="value"><span id="header-skill-mining-level">0</span></div>
+                            </div>
+                            <div>
+                                EXP: <div class="value"><span id="header-skill-mining-experience">0</span> / <span id="header-skill-mining-experience-required">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+					<progress id="header-skill-progress-mining-bar" class="progress-bar" value="0" max="100"></progress>
+                </div>
+                <div class="item">
+                    <div class="flex center v-center">
+                        <div class="container-icon">
+                            <img src="img/skills/woodcutting.png" alt="Woodcutting icon" class="icon skill" />
+                        </div>
+                        <div class="container-title">
+                            <div class="skill-title">Woodcutting</div>
+                            <div>
+                                LVL: <div class="value"><span id="header-skill-woodcutting-level">0</span></div>
+                            </div>
+                            <div>
+                                EXP: <div class="value"><span id="header-skill-woodcutting-experience">0</span> / <span id="header-skill-woodcutting-experience-required">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+        			<progress id="header-skill-progress-woodcutting-bar" class="progress-bar" value="0" max="100"></progress>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="container">
+        <main>
+			<h2 style="text-align: center;">Actions</h2>
+
+			<div id="container-actions" class="flex center">
+	            <div id="action-fight-chicken" class="item">
+					Fight a chicken<br />
+					<span class="details">2.5 seconds</span><br />
+				</div>
+	            <div id="action-mine-smallrock" class="item">
+					Mine small rock<br />
+					<span class="details">3 seconds</span><br />
+				</div>
+	            <div id="action-cut-smalltree" class="item">
+					Cut small tree<br />
+					<span class="details">2 seconds</span><br />
+				</div>
+			</div>
+        </main>
+    </div>
+
+	<footer>
+		<p>IdleRPG b.01 (04.04.2017)</p>
+	</footer>
+
+    <script type="text/javascript" src="js/player.js"></script>
+    <script type="text/javascript" src="js/skill.js"></script>
+    <script type="text/javascript" src="js/core.js"></script>
+</body>
+</html>
