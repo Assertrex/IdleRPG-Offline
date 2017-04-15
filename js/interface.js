@@ -81,7 +81,7 @@ function renderActionList() {
 
 					// Add items into player's inventory
 					actionsList[i].itemsRewards.forEach((value) => {
-						addInventoryItem(value.id, value.amount);
+						addInventoryItem(value.id, value.amountMin, value.amountMax, value.chance);
 					});
 
 					// Refresh skills list values

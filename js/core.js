@@ -12,3 +12,11 @@ renderActionList();
 
 // Display player's inventory items
 refreshInventoryList();
+
+// Generate pseudo-random number
+function getRandomNumber(min, max) {
+	const engine = Random.engines.browserCrypto;
+	let distribution = Random.integer(min, max);
+
+	return distribution(engine);
+}

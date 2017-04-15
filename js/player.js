@@ -34,8 +34,8 @@ let actionsList = [
 			{ id: 0, amount: 2 }
 		],
 		itemsRewards: [
-			{ id: 3, amount: 1 },
-			{ id: 4, amount: 15 }
+			{ id: 3, amountMin: 1, amountMax: 1, chance: 100 },
+			{ id: 4, amountMin: 5, amountMax: 15, chance: 100 }
 		]
 	},
 	{
@@ -46,7 +46,7 @@ let actionsList = [
 			{ id: 1, amount: 3 }
 		],
 		itemsRewards: [
-			{ id: 5, amount: 1 }
+			{ id: 5, amountMin: 1, amountMax: 3, chance: 100 }
 		]
 	},
 	{
@@ -57,7 +57,8 @@ let actionsList = [
 			{ id: 2, amount: 1 }
 		],
 		itemsRewards: [
-			{ id: 6, amount: 1 }
+			{ id: 6, amountMin: 1, amountMax: 2, chance: 100 },
+			{ id: 7, amountMin: 1, amountMax: 3, chance: 10 }
 		]
 	},
 ];
@@ -91,13 +92,20 @@ function getPlayerInventory() {
 }
 
 // Add item to player's inventory
-function addInventoryItem(id, amount) {
+function addInventoryItem(id, amountMin, amountMax, chance) {
 	const itemAmount = playerInventory.get(id);
+	const chanceNumber = getRandomNumber(0, 100);
 
-	if (typeof itemAmount === 'undefined') {
-		playerInventory.set(id, amount);
-	} else {
-		playerInventory.set(id, itemAmount + amount);
+	// Check if player got enough chance to get item
+	if (chanceNumber < chance) {
+		const dropAmount = getRandomNumber(amountMin, amountMax);
+
+		// Create new map element if not existing yet
+		if (typeof itemAmount === 'undefined') {
+			playerInventory.set(id, dropAmount);
+		} else {
+			playerInventory.set(id, itemAmount + dropAmount);
+		}
 	}
 
 	return true;
