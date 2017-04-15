@@ -115,7 +115,7 @@ function refreshInventoryList() {
 		dom_containerInventoryList.insertAdjacentHTML(
 			'beforeend',
 			`<li id="inventory-item-${key}">
-				<div class="item">${getItemName(key)} x${value}</div>
+				<div class="item">${getItemName(key)} (x${value})</div>
 				<div class="actions">
 					<span class="button use">Use</span>
 					<span class="button sell">Sell</span>

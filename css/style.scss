@@ -1,3 +1,15 @@
+@import "scss/typography";
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+#container {
+	flex: 1;
+}
+
 .container {
     margin: 0 auto;
     padding: 0 5%;
@@ -16,6 +28,10 @@
     }
 }
 
+section {
+	padding: 24px 0;
+}
+
 #container-skills {
     text-align: center;
 
@@ -24,11 +40,10 @@
     }
 
 	.container-skill-icon {
-
-
         img {
 			width: 48px;
 	        height: 48px;
+			vertical-align: middle;
 		}
     }
 
@@ -55,7 +70,7 @@
 		width: 200px;
 		height: 17px;
 		background-color: #000;
-		border-radius: 8px;
+		border-radius: 4px;
 		overflow: hidden;
 
 		&::-webkit-progress-bar {
@@ -65,7 +80,7 @@
 
 		&::-webkit-progress-value {
 			background-color: #4CAF50;
-		    background: linear-gradient(to bottom, #43A047 0%, #81C784 50%, #43A047 100%);
+		    background: linear-gradient(to bottom, #FF9800 0%, #FFE0B2 50%, #FF9800 100%);
 		}
 	}
 }
@@ -79,12 +94,13 @@
 		padding: 12px 12px;
 		text-align: center;
 		border: 1px solid #000;
+		border-radius: 6px;
 		cursor: pointer;
 		user-select: none;
 
 		&.active {
-			background-color: #C8E6C9;
-			border-color: #43A047;
+			background-color: #FFE0B2;
+			border-color: #FF9800;
 		}
 
 		.details {
@@ -102,24 +118,48 @@
 
 		li {
 			display: flex;
-			padding: .25em 0;
 
 			.item {
 				flex: 1;
 			}
 
 			.actions span {
-				margin: 0 .25em;
+				display: inline-block;
+				padding: .25em .75em;
 				cursor: pointer;
+
+				&.use {
+					color: #3F51B5;
+
+					&:hover {
+						background-color: #3F51B5;
+						color: #FFF;
+						border-radius: 6px;
+					}
+				}
+
+				&.sell {
+					color: #4CAF50;
+
+					&:hover {
+						background-color: #4CAF50;
+						color: #FFF;
+						border-radius: 6px;
+					}
+				}
 
 				&.drop {
 					color: #F44336;
+
+					&:hover {
+						background-color: #F44336;
+						color: #FFF;
+						border-radius: 6px;
+					}
 				}
 			}
 		}
 	}
 }
 
-footer {
-	text-align: center;
-}
+@import "scss/footer";

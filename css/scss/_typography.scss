@@ -1,0 +1,34 @@
+// Import "Rubik" font
+@font-face {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Rubik"), local("Rubik-Regular"),
+        url("font/rubik-v3-latin-ext-regular.woff2") format("woff2"),
+        url("font/rubik-v3-latin-ext-regular.woff") format("woff");
+}
+
+// Set up font and line height
+body {
+    color: #212121;
+    font: 15px "Rubik", sans-serif;
+    line-height: 1.4;
+}
+
+// Set up default margin for h2 and center content
+h2 {
+	margin: 0 0 24px;
+	text-align: center;
+}
+
+// Set up orange text and disable decorations
+a {
+	color: #E64A19;
+	text-decoration: none;
+	outline: none;
+
+	&:hover {
+		color: #FF7043;
+		text-decoration: underline;
+	}
+}
