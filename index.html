@@ -6,27 +6,38 @@
     <link type="text/css" rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <header>
-        <div>
-			<h2 style="text-align: center;">Skills</h2>
-
-            <div id="container-skills" class="container flex center"></div>
-        </div>
-    </header>
-
     <div id="container">
-        <main>
-			<h2 style="text-align: center;">Actions</h2>
+        <main class="container">
+			<section>
+				<h2 style="text-align: center;">Skills</h2>
+            	<div id="container-skills" class="flex center"></div>
+			</section>
 
-			<div id="container-actions" class="flex center"></div>
-        </main>
+			<section>
+				<h2 style="text-align: center;">Actions</h2>
+				<div id="container-actions" class="flex center"></div>
+			</section>
+
+			<section>
+				<h2 style="text-align: center;">Inventory</h2>
+				<div id="container-inventory">
+					<ul></ul>
+				</div>
+			</section>
+		</main>
     </div>
 
 	<footer>
-		<p>IdleRPG v0.1.1-dev | Build: 2 | Updated at: 15.04.2017</p>
+		<div class="container">
+			<p>
+				<a href="index.html">IdleRPG</a> v0.1.1-dev by <a href="https://norbertgti.tk" target="_blank">Assertrex</a> |
+				<a href="https://github.com/Assertrex/IdleRPG-Offline" target="_blank">GitHub</a>: v3 (15.04.2017)
+			</p>
+		</div>
 	</footer>
 
 	<script type="text/javascript" src="js/interface.js"></script>
+	<script type="text/javascript" src="js/item.js"></script>
     <script type="text/javascript" src="js/skill.js"></script>
     <script type="text/javascript" src="js/player.js"></script>
     <script type="text/javascript" src="js/core.js"></script>

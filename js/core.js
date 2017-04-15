@@ -9,3 +9,6 @@ renderSkillList();
 
 // Display player's available actions
 renderActionList();
+
+// Display player's inventory items
+refreshInventoryList();

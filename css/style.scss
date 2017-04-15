@@ -93,3 +93,33 @@
 		}
 	}
 }
+
+#container-inventory {
+
+
+	ul {
+		list-style: none;
+
+		li {
+			display: flex;
+			padding: .25em 0;
+
+			.item {
+				flex: 1;
+			}
+
+			.actions span {
+				margin: 0 .25em;
+				cursor: pointer;
+
+				&.drop {
+					color: #F44336;
+				}
+			}
+		}
+	}
+}
+
+footer {
+	text-align: center;
+}

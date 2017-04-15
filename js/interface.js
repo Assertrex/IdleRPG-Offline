@@ -3,6 +3,7 @@
 // Define constant DOM elements
 const dom_containerActions = document.querySelector('#container-actions');
 const dom_containerSkills = document.querySelector('#container-skills');
+const dom_containerInventory = document.querySelector('#container-inventory');
 
 // Iterate through every player skill
 function renderSkillList() {
@@ -78,12 +79,51 @@ function renderActionList() {
 					// Add experience to player's statistics
 					addSkillExperience(actionsList[i].experienceRewards[0].id, actionsList[i].experienceRewards[0].amount);
 
+					// Add items into player's inventory
+					actionsList[i].itemsRewards.forEach((value) => {
+						addInventoryItem(value.id, value.amount);
+					});
+
 					// Refresh skills list values
 					refreshSkillList();
+
+					// Refresh inventory list
+					refreshInventoryList();
 				}, actionsList[i].time * 1000);
 			}
 		});
 	}
+
+	return true;
+}
+
+// Refresh player's every inventory item
+function refreshInventoryList() {
+	// Store inventory items list element
+	const dom_containerInventoryList = dom_containerInventory.querySelector('ul');
+
+	// Remove all items from inventory section
+    while(dom_containerInventoryList.firstChild){
+        dom_containerInventoryList.removeChild(dom_containerInventoryList.firstChild);
+    }
+
+	// Store inventory items list
+	const inventory = getPlayerInventory();
+
+	// List every item into inventory section
+    inventory.forEach((value, key) => {
+		dom_containerInventoryList.insertAdjacentHTML(
+			'beforeend',
+			`<li id="inventory-item-${key}">
+				<div class="item">${getItemName(key)} x${value}</div>
+				<div class="actions">
+					<span class="button use">Use</span>
+					<span class="button sell">Sell</span>
+					<span class="button drop">Drop</span>
+				</div>
+			</li>`
+		);
+    });
 
 	return true;
 }

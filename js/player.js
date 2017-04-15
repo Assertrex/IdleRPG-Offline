@@ -19,6 +19,11 @@ let playerSkills = [
 	}
 ]
 
+// Store player's inventory as map and give coins, pickaxe and axe on start
+let playerInventory = new Map([
+    [0, 25], [1, 1], [2, 1]
+]);
+
 // Store actions list
 let actionsList = [
 	{
@@ -26,10 +31,11 @@ let actionsList = [
 		title: 'Fight a chicken',
 		time: 2.5,
 		experienceRewards: [
-			{
-				id: 0,
-				amount: 2
-			}
+			{ id: 0, amount: 2 }
+		],
+		itemsRewards: [
+			{ id: 3, amount: 1 },
+			{ id: 4, amount: 15 }
 		]
 	},
 	{
@@ -37,10 +43,10 @@ let actionsList = [
 		title: 'Mine small rock',
 		time: 3,
 		experienceRewards: [
-			{
-				id: 1,
-				amount: 3
-			}
+			{ id: 1, amount: 3 }
+		],
+		itemsRewards: [
+			{ id: 5, amount: 1 }
 		]
 	},
 	{
@@ -48,10 +54,10 @@ let actionsList = [
 		title: 'Cut small tree',
 		time: 2,
 		experienceRewards: [
-			{
-				id: 2,
-				amount: 1
-			}
+			{ id: 2, amount: 1 }
+		],
+		itemsRewards: [
+			{ id: 6, amount: 1 }
 		]
 	},
 ];
@@ -77,4 +83,22 @@ function addSkillExperience(id, amount) {
 	}
 
     return true;
+}
+
+// Get player's inventory items map
+function getPlayerInventory() {
+	return playerInventory;
+}
+
+// Add item to player's inventory
+function addInventoryItem(id, amount) {
+	const itemAmount = playerInventory.get(id);
+
+	if (typeof itemAmount === 'undefined') {
+		playerInventory.set(id, amount);
+	} else {
+		playerInventory.set(id, itemAmount + amount);
+	}
+
+	return true;
 }
