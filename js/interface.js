@@ -53,45 +53,11 @@ function renderActionList() {
 	for (let i = 0; i < actionsList.length; i++) {
 		// Insert HTML for each available action
 		dom_containerActions.insertAdjacentHTML('beforeend', `
-			<div id="action-${actionsList[i].id}" class="item">
+			<div data-action-id="${actionsList[i].id}" class="item">
 				${actionsList[i].title}<br />
 				<span class="details">${actionsList[i].time} seconds</span><br />
 			</div>
 		`);
-
-		const dom_buttonAction = document.querySelector('#action-' + actionsList[i].id);
-
-		// Listen for action clicks
-		dom_buttonAction.addEventListener('click', () => {
-			// Check if no any other action is active now
-			if (actionTimer === undefined) {
-				// Set action button class to active item
-				dom_buttonAction.className = "item active";
-
-				// Do action for defined time
-				actionTimer = setTimeout(() => {
-					// Reset action button class to default item
-					dom_buttonAction.className = "item";
-
-					// Clear current action timer
-					actionTimer = undefined;
-
-					// Add experience to player's statistics
-					addSkillExperience(actionsList[i].experienceRewards[0].id, actionsList[i].experienceRewards[0].amount);
-
-					// Add items into player's inventory
-					actionsList[i].itemsRewards.forEach((value) => {
-						addInventoryItem(value.id, value.amountMin, value.amountMax, value.chance);
-					});
-
-					// Refresh skills list values
-					refreshSkillList();
-
-					// Refresh inventory list
-					refreshInventoryList();
-				}, actionsList[i].time * 1000);
-			}
-		});
 	}
 
 	return true;
@@ -114,16 +80,83 @@ function refreshInventoryList() {
     inventory.forEach((value, key) => {
 		dom_containerInventoryList.insertAdjacentHTML(
 			'beforeend',
-			`<li id="inventory-item-${key}">
+			`<li>
 				<div class="item">${getItemName(key)} (x${value})</div>
 				<div class="actions">
-					<span class="button use">Use</span>
-					<span class="button sell">Sell</span>
-					<span class="button drop">Drop</span>
+					<span data-inventory-id="${key}" data-inventory-action="use" class="button use">Use</span>
+					<span data-inventory-id="${key}" data-inventory-action="sell" class="button sell">Sell</span>
+					<span data-inventory-id="${key}" data-inventory-action="drop" class="button drop">Drop</span>
 				</div>
 			</li>`
 		);
     });
 
 	return true;
+}
+
+// Set up click listeners for whole containers
+function setClickListeners() {
+	// Listen for action clicks
+	dom_containerActions.addEventListener('click', (e) => {
+		let button = null;
+		let id = null;
+
+		// Get id of action button clicked directly
+		if (e.target.getAttribute('data-action-id') != null) {
+			button = e.target;
+			id = e.target.getAttribute('data-action-id');
+		}
+
+		// Get id of action button when clicked on child
+		if (e.target.parentNode.getAttribute('data-action-id') != null) {
+			button = e.target.parentNode;
+			id = e.target.parentNode.getAttribute('data-action-id');
+		}
+
+		// Do action if button or it's child has been clicked
+		if (button != null && id != null) {
+			if (actionTimer === undefined) {
+				// Set action button class to active item
+				button.className = "item active";
+
+				// Do action for defined time
+				actionTimer = setTimeout(() => {
+					// Reset action button class to default item
+					button.className = "item";
+
+					// Clear current action timer
+					actionTimer = undefined;
+
+					// Add experience to player's statistics
+					addSkillExperience(actionsList[id - 1].experienceRewards[0].id, actionsList[id - 1].experienceRewards[0].amount);
+
+					// Add items into player's inventory
+					actionsList[id - 1].itemsRewards.forEach((value) => {
+						addInventoryItem(value.id, value.amountMin, value.amountMax, value.chance);
+					});
+
+					// Refresh skills list values
+					refreshSkillList();
+
+					// Refresh inventory list
+					refreshInventoryList();
+				}, actionsList[id - 1].time * 1000);
+			}
+		}
+	});
+
+	// Listen for inventory clicks
+	dom_containerInventory.addEventListener('click', (e) => {
+		let action = null;
+		let id = null;
+
+		// Get id of action button clicked directly
+		if (e.target.getAttribute('data-inventory-id') != null && e.target.getAttribute('data-inventory-action') != null) {
+			action = e.target.getAttribute('data-inventory-action');
+			id = e.target.getAttribute('data-inventory-id');
+
+			// I'm not implementing this feature yet, because there's no use for it now.
+			// console.log('Requested', action, 'action for the', getItemName(id), '(' + id + ') item.');
+		}
+	});
 }

@@ -13,6 +13,9 @@ renderActionList();
 // Display player's inventory items
 refreshInventoryList();
 
+// Set up clicks listeners for whole containers
+setClickListeners();
+
 // Generate pseudo-random number
 function getRandomNumber(min, max) {
 	const engine = Random.engines.browserCrypto;
