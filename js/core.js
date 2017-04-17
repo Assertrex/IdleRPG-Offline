@@ -13,6 +13,9 @@ renderActionList();
 // Display player's inventory items
 refreshInventoryList();
 
+// Display available crafting list
+refreshCraftingList();
+
 // Set up clicks listeners for whole containers
 setClickListeners();
 

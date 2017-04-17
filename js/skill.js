@@ -17,6 +17,11 @@ let skillsList = [
 		title: 'Woodcutting',
 		icon: 'skills/woodcutting.png'
 	},
+	{
+		id: 3,
+		title: 'Crafting',
+		icon: 'skills/crafting.png'
+	},
 ];
 
 // Store experience list needed for level up

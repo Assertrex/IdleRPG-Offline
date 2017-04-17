@@ -4,6 +4,7 @@
 const dom_containerActions = document.querySelector('#container-actions');
 const dom_containerSkills = document.querySelector('#container-skills');
 const dom_containerInventory = document.querySelector('#container-inventory');
+const dom_containerCrafting = document.querySelector('#container-crafting');
 
 // Iterate through every player skill
 function renderSkillList() {
@@ -78,6 +79,12 @@ function refreshInventoryList() {
 
 	// List every item into inventory section
     inventory.forEach((value, key) => {
+		// Don't display item if amount is equal to 0
+		if (value === 0) {
+			return false;
+		}
+
+		// Insert item with action buttons into inventory section
 		dom_containerInventoryList.insertAdjacentHTML(
 			'beforeend',
 			`<li>
@@ -86,6 +93,62 @@ function refreshInventoryList() {
 					<span data-inventory-id="${key}" data-inventory-action="use" class="button use">Use</span>
 					<span data-inventory-id="${key}" data-inventory-action="sell" class="button sell">Sell</span>
 					<span data-inventory-id="${key}" data-inventory-action="drop" class="button drop">Drop</span>
+				</div>
+			</li>`
+		);
+    });
+
+	return true;
+}
+
+// Refresh player's every inventory item
+function refreshCraftingList() {
+	// Store inventory items list element
+	const dom_containerCraftingList = dom_containerCrafting.querySelector('ul');
+
+	// Remove all items from inventory section
+    while(dom_containerCraftingList.firstChild){
+        dom_containerCraftingList.removeChild(dom_containerCraftingList.firstChild);
+    }
+
+	// Store inventory items list
+	const crafting = getAvailableCrafting();
+
+	// List every item into inventory section
+    crafting.forEach((value, key) => {
+		let availabilityClass = 'available';
+		let requiredItemsString = '';
+		let requiredLevelString = '';
+
+		for (let i = 0; i < value.requiredItems.length; i++) {
+			if (playerInventory.get(value.requiredItems[i][0]) === undefined || playerInventory.get(value.requiredItems[i][0]) < value.requiredItems[i][1]) {
+				availabilityClass = 'unavailable';
+				requiredItemsString += '<span class="unavailable">';
+			} else {
+				requiredItemsString += '<span class="available">';
+			}
+
+			requiredItemsString += value.requiredItems[i][1] + ' of ' + getItemName(value.requiredItems[i][0]);
+			requiredItemsString += '</span>';
+
+			if (i < value.requiredItems.length - 1) {
+				requiredItemsString += ' & ';
+			}
+		}
+
+		if (getSkillLevel(3) < value.level) {
+			availabilityClass = 'unavailable';
+			requiredLevelString = '<span class="unavailable">Lv. ' + value.level + '</span>';
+		} else {
+			requiredLevelString = '<span class="available">Lv. ' + value.level + '</span>';
+		}
+
+		dom_containerCraftingList.insertAdjacentHTML(
+			'beforeend',
+			`<li class="${availabilityClass}">
+				<div class="item">${value.amount}x: ${getItemName(value.item)} (${requiredItemsString}) (${requiredLevelString})</div>
+				<div class="actions">
+					<span data-crafting-id="${key}" data-crafting-action="craft" data-crafting-status="${availabilityClass}" class="button craft">Craft</span>
 				</div>
 			</li>`
 		);
@@ -140,6 +203,9 @@ function setClickListeners() {
 
 					// Refresh inventory list
 					refreshInventoryList();
+
+					// Refresh crafting list
+					refreshCraftingList();
 				}, actionsList[id - 1].time * 1000);
 			}
 		}
@@ -157,6 +223,28 @@ function setClickListeners() {
 
 			// I'm not implementing this feature yet, because there's no use for it now.
 			// console.log('Requested', action, 'action for the', getItemName(id), '(' + id + ') item.');
+		}
+	});
+
+	// Listen for crafting actions
+	dom_containerCrafting.addEventListener('click', (e) => {
+		let id = null;
+
+		// Get id of action button clicked directly (if action is available)
+		if (e.target.getAttribute('data-crafting-id') != null && e.target.getAttribute('data-crafting-action') === 'craft' && e.target.getAttribute('data-crafting-status') === 'available') {
+			id = e.target.getAttribute('data-crafting-id');
+
+			// If item has been crafted successfully, refresh all used sections
+			if (doCraftItem(id)) {
+				// Refresh skills list values
+				refreshSkillList();
+
+				// Refresh inventory list
+				refreshInventoryList();
+
+				// Refresh crafting list
+				refreshCraftingList();
+			}
 		}
 	});
 }

@@ -16,6 +16,11 @@ let playerSkills = [
 		id: 2,
 		level: 1,
 		experience: 0
+	},
+	{
+		id: 3,
+		level: 1,
+		experience: 0
 	}
 ]
 

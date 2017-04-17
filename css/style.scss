@@ -110,7 +110,7 @@ section {
 	}
 }
 
-#container-inventory {
+#container-inventory, #container-crafting {
 
 
 	ul {
@@ -157,6 +157,35 @@ section {
 						border-radius: 6px;
 					}
 				}
+
+				&.craft {
+					color: #2196F3;
+
+					&:hover {
+						background-color: #2196F3;
+						color: #FFF;
+						border-radius: 6px;
+					}
+				}
+			}
+		}
+	}
+}
+
+#container-crafting {
+	li.unavailable {
+		text-decoration: line-through;
+
+		.item .unavailable {
+			color: #F00;
+		}
+
+		.button.craft {
+			color: #AAA;
+			cursor: not-allowed;
+
+			&:hover {
+				background-color: #AAA;
 			}
 		}
 	}
