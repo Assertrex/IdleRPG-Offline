@@ -5,6 +5,7 @@ const dom_containerActions = document.querySelector('#container-actions');
 const dom_containerSkills = document.querySelector('#container-skills');
 const dom_containerInventory = document.querySelector('#container-inventory');
 const dom_containerCrafting = document.querySelector('#container-crafting');
+const dom_containerLocation = document.querySelector('#container-location');
 
 // Iterate through every player skill
 function renderSkillList() {
@@ -157,6 +158,32 @@ function refreshCraftingList() {
 	return true;
 }
 
+function refreshLocationList() {
+	// Remove all actions from travel section
+    while(dom_containerLocation.firstChild){
+        dom_containerLocation.removeChild(dom_containerLocation.firstChild);
+    }
+
+	// Store travel items list
+	const travelList = getLocationList();
+
+	for (let i = 0; i < travelList.length; i++) {
+		const travelTime = getTravelTime(travelList[i].id);
+
+		if (travelList[i].id != playerCurrentLocation) {
+			// Insert HTML for each available action
+			dom_containerLocation.insertAdjacentHTML('beforeend', `
+				<div data-location-id="${travelList[i].id}" class="item">
+					${travelList[i].title}<br />
+					<span class="details">${getTravelTime(travelList[i].id)} seconds</span><br />
+				</div>
+			`);
+		}
+	}
+
+	return true;
+}
+
 // Set up click listeners for whole containers
 function setClickListeners() {
 	// Listen for action clicks
@@ -244,6 +271,47 @@ function setClickListeners() {
 
 				// Refresh crafting list
 				refreshCraftingList();
+			}
+		}
+	});
+
+	// Listen for travel actions
+	dom_containerLocation.addEventListener('click', (e) => {
+		let button = null;
+		let id = null;
+
+		// Get id of location button clicked directly
+		if (e.target.getAttribute('data-location-id') != null) {
+			button = e.target;
+			id = e.target.getAttribute('data-location-id');
+		}
+
+		// Get id of location button when clicked on child
+		if (e.target.parentNode.getAttribute('data-location-id') != null) {
+			button = e.target.parentNode;
+			id = e.target.parentNode.getAttribute('data-location-id');
+		}
+
+		// Do action if button or it's child has been clicked
+		if (button != null && id != null) {
+			if (actionTimer === undefined) {
+				// Set action button class to active item
+				button.className = "item active";
+
+				// Do action for defined time
+				actionTimer = setTimeout(() => {
+					// Reset action button class to default item
+					button.className = "item";
+
+					// Move player to selected location
+					playerCurrentLocation = id;
+
+					// Clear current action timer
+					actionTimer = undefined;
+
+					// Refresh crafting list
+					refreshLocationList();
+				}, getTravelTime(id) * 1000);
 			}
 		}
 	});

@@ -16,6 +16,8 @@ refreshInventoryList();
 // Display available crafting list
 refreshCraftingList();
 
+refreshLocationList();
+
 // Set up clicks listeners for whole containers
 setClickListeners();
 

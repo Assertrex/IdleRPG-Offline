@@ -29,6 +29,12 @@ let playerInventory = new Map([
     [0, 25], [1, 1], [2, 1]
 ]);
 
+// Store location IDs unlocked by player
+let playerLocations = [1];
+
+// Store current location of player
+let playerCurrentLocation = 1;
+
 // Store actions list
 let actionsList = [
 	{
